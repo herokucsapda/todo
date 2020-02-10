@@ -1,18 +1,29 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Box, Container } from '@material-ui/core'
-import MyComponent from 'components/MyComponent'
+import TodoList from 'components/TodoList';
+import TodoCreator from 'components/TodoCreator';
 
 function App() {
+  const [todos, setTodos] = useState([]);
+
+  function addTodo(title) {
+    const nextTodos = [...todos];
+    const todo = { title: title, completed: false };
+    nextTodos.unshift(todo);
+    setTodos(nextTodos);
+  }
+
   return (
     <Container>
       <Box
         my={20}
         display='flex'
         justifyContent='center'
-        alignItems='center'
-        flexDirection='row'
+        alignItems='left'
+        flexDirection='column'
       >
-        <MyComponent />
+        <TodoCreator onCreate={addTodo} />
+        <TodoList todos={todos} setTodos={setTodos} />
       </Box>
     </Container>
   );
